@@ -8,15 +8,21 @@ public class PlayerController : MonoBehaviour {
     public Animator animator;
     float horizontalMove, verticalMove = 0f;
     public float runSpeed = 40f;
-    bool jump = false;
+    bool jump,crouch = false;
 
     // Update is called once per frame
     void Update () {
-    	if(!Input.GetButtonDown("Fire1") || !Input.GetButtonDown("Fire2")){
-        	horizontalMove = Input.GetAxisRaw("Horizontal")* runSpeed;
-        }
+    	horizontalMove = Input.GetAxisRaw("Horizontal")* runSpeed;
+    	verticalMove = Input.GetAxisRaw("Vertical");
 
-		if (Input.GetButtonDown("Jump") && controller.m_Grounded)
+    	if(verticalMove == -1){
+    		animator.Play("Croutch");
+			crouch=true;
+    	}else{
+			crouch=false;
+    	}
+
+		if (Input.GetButtonDown("Jump") && controller.m_Grounded && !crouch)
         {
             jump = true;
             animator.SetFloat("RunFloat", Mathf.Abs(0.0f));//Stop Running Animation
@@ -28,24 +34,26 @@ public class PlayerController : MonoBehaviour {
         }
 
         //Attack Animations
-		if(controller.m_Grounded){//Is Player Grounded
-				if(Input.GetButtonDown("Fire1")){
-					animator.Play("AttackOne");
-		        }
+		if(!crouch){
+			if(controller.m_Grounded){//Is Player Grounded
+					if(Input.GetButtonDown("Fire1")){
+						animator.Play("AttackOne");
+			        }
 
-	        if(Input.GetButtonDown("Fire2")){
-				animator.Play("AttackTwo");
-		       }
-        }else{
-        	if(Input.GetButtonDown("Fire1")){//Jump Attack
-        		animator.Play("JumpAttack");
-        	}
+		        if(Input.GetButtonDown("Fire2")){
+					animator.Play("AttackTwo");
+			       }
+	        }else{
+	        	if(Input.GetButtonDown("Fire1")){//Jump Attack
+	        		animator.Play("JumpAttack");
+	        	}
+	        }
         }
 	}
 
     void FixedUpdate()
     {
-        controller.Move(horizontalMove * Time.fixedDeltaTime, false, jump);
+		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
 	    jump = false;
     }
 }
