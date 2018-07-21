@@ -15,11 +15,16 @@ public class PlayerController : MonoBehaviour {
     	horizontalMove = Input.GetAxisRaw("Horizontal")* runSpeed;
     	verticalMove = Input.GetAxisRaw("Vertical");
 
-    	if(verticalMove == -1){
-    		animator.Play("Croutch");
+    	if(verticalMove == -1|| horizontalMove !=0 && verticalMove==-1){
 			crouch=true;
-    	}else{
+			animator.SetBool("CrouchBool",crouch);
+			if(horizontalMove !=0){
+				animator.SetBool("CrouchDashBool",crouch);
+			}
+    	}else{//Once Crouch is Finish Stop all appropriate Animations
 			crouch=false;
+			animator.SetBool("CrouchBool",crouch);
+			animator.SetBool("CrouchDashBool",crouch);
     	}
 
 		if (Input.GetButtonDown("Jump") && controller.m_Grounded && !crouch)
@@ -28,7 +33,7 @@ public class PlayerController : MonoBehaviour {
             animator.SetFloat("RunFloat", Mathf.Abs(0.0f));//Stop Running Animation
             animator.SetTrigger("JumpTrigger");
         }
-        else
+        else//Handling Running/horizontalMove
         {
 		  animator.SetFloat("RunFloat", Mathf.Abs(horizontalMove));
         }
