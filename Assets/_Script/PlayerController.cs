@@ -8,12 +8,14 @@ public class PlayerController : MonoBehaviour {
     public Animator animator;
     float horizontalMove, verticalMove = 0f;
     public float runSpeed = 40f;
-    bool jump,crouch = false;
+    bool jump,crouch, stopMovement = false;
 
     // Update is called once per frame
     void Update () {
-    	horizontalMove = Input.GetAxisRaw("Horizontal")* runSpeed;
-    	verticalMove = Input.GetAxisRaw("Vertical");
+    	if(!stopMovement){
+	    	horizontalMove = Input.GetAxisRaw("Horizontal")* runSpeed;
+	    	verticalMove = Input.GetAxisRaw("Vertical");
+    	}
 
     	if(verticalMove == -1|| horizontalMove !=0 && verticalMove==-1){
 			crouch=true;
@@ -53,6 +55,15 @@ public class PlayerController : MonoBehaviour {
 	        		animator.Play("JumpAttack");
 	        	}
 	        }
+	        if(Input.GetButtonDown("Fire3") &&!stopMovement){//Activate Ninja Skill
+				stopMovement=true;
+				horizontalMove=0;
+				animator.SetBool("NinjaSkillBool",stopMovement);
+			}else if(Input.GetButtonDown("Fire3") && stopMovement){ //Deactivate Ninja Skill
+				stopMovement=false;
+				animator.SetBool("NinjaSkillBool",stopMovement);
+			}
+	       
         }
 	}
 
