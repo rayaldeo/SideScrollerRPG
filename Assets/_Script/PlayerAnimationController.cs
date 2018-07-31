@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerAnimationController : MonoBehaviour {
 
     public CharacterController2D controller;
     public Animator animator;
     float horizontalMove, verticalMove = 0f;
     public float runSpeed = 40f;
-    bool jump,crouch, stopMovement = false;
+	bool jump,crouch,stopMovement = false;
 
     // Update is called once per frame
     void Update () {
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour {
         }
         else//Handling Running/horizontalMove
         {
-		  animator.SetFloat("RunFloat", Mathf.Abs(horizontalMove));
+			animator.SetFloat("RunFloat", Mathf.Abs(horizontalMove));
         }
 
         //Attack Animations
