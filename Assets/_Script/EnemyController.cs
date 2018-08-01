@@ -46,7 +46,7 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionStay2D(Collision2D other){//Enemy comes into contact with Player
+	void OnTriggerEnter2D(Collider2D other){//Enemy comes into contact with Player
 		//print("Collisions are Going on");
 		if(other.gameObject.tag =="Player"){
 			cameIntoContactWithPlayer=true;
@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionExit2D(Collision2D other){//Enemy is not in contact with Player
+	void OnTriggerExit2D(Collider2D other){//Enemy is not in contact with Player
 		//print("Collisions has been lost");
 		if(other.gameObject.tag== "Player"){
 			attack=false;
