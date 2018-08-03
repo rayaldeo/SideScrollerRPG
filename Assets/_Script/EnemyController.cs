@@ -6,7 +6,7 @@ public class EnemyController : MonoBehaviour {
 
 	private Animator animator;
 	private Rigidbody2D enemyRigidBody;
-	private Transform player;
+	public Transform playerTransform;
 	public float m_Speed;
 	public bool attack = false;
 
@@ -25,12 +25,16 @@ public class EnemyController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		/*player = PlayerManager.instance.transform;
-		if(cameIntoContactWithPlayer){//Chase player after coming into contact with him
-			float distance = player.position.x-transform.position.x;
-			print(distance);
-		}*/
-		//print("Is Player facing right?: "+playerFacingRight);
+		if(cameIntoContactWithPlayer){
+			if(playerTransform.position.x > this.transform.position.x && goingLeft){
+				Flip();
+				goingLeft=false;
+			}
+			if(playerTransform.position.x < this.transform.position.x && !goingLeft){
+				Flip();
+				goingLeft=true;
+			}
+		}
 	}
 
 	void FixedUpdate(){
