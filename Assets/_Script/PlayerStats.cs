@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour {
 
 	private Animator animator;
+	public BoxCollider2D weapon;
 
 	//Health
 	[SerializeField]
@@ -50,6 +51,7 @@ public class PlayerStats : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		IsWeaponActive(0);
 		animator = GetComponent<Animator>();
 	}
 	
@@ -113,6 +115,13 @@ public class PlayerStats : MonoBehaviour {
 		print("Current Level: " + this.Level + "Current Exp: "+ this.Exp);
 	}
 
+	//Controlled through Animation Events
+	public void IsWeaponActive(int value){
+		if(value ==1){
+			weapon.enabled=true;
+		}else{
+			weapon.enabled=false;
+		}
+	}
 
-		
 }

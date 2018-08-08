@@ -10,6 +10,7 @@ public class PlayerAnimationController : MonoBehaviour {
     public float runSpeed = 40f;
 	bool jump,crouch,stopMovement = false;
 
+
     // Update is called once per frame
     void Update () {
     	if(!stopMovement){
@@ -43,7 +44,7 @@ public class PlayerAnimationController : MonoBehaviour {
         //Attack Animations
 		if(!crouch){
 			if(controller.m_Grounded){//Is Player Grounded
-					if(Input.GetButtonDown("Fire1")){
+				if(Input.GetButtonDown("Fire1")){
 						animator.Play("AttackOne");
 			        }
 
@@ -72,4 +73,5 @@ public class PlayerAnimationController : MonoBehaviour {
 		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
 	    jump = false;
     }
+
 }
