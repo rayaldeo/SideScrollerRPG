@@ -71,9 +71,14 @@ public class EnemyStats : MonoBehaviour {
 	void Die(){
 		animator.Play(deathAnimationString);
 		Debug.Log("Enemy has died and is Giving Off this much EXP: "+this.Exp);
+		Collider2D[] colliders = this.GetComponents<Collider2D>();
+		foreach(Collider2D collider in colliders){//this will disable all collision/Colliders on the Enemy GameObject
+			collider.enabled=false;
+		}
+		GetComponent<EnemyController>().enabled=false;//Stop the Enemy from Follwing and attacking the Player
 	}
 
-	void ApplyDamage(int dmg){
+	public void ApplyDamage(int dmg){
 		animator.Play("Hurt");
 		dmg -= this.Defense;
 		dmg = Mathf.Clamp(dmg,1,int.MaxValue);
