@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class EnemyStats : MonoBehaviour {
 
 	private Animator animator;
+	private EnemyController controller;
+	public Canvas canvas;
 	public string hurtAnimationString,deathAnimationString;
+	public Text damageValueText;
 
 	//Health
 	[SerializeField]
@@ -58,6 +62,7 @@ public class EnemyStats : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
 	//Testing
 		if(Input.GetKeyDown("o")){
 			ApplyDamage(12);
@@ -84,6 +89,7 @@ public class EnemyStats : MonoBehaviour {
 		dmg = Mathf.Clamp(dmg,1,int.MaxValue);
 		//Apply Damage to Health
 		AffectHealth(-dmg);
+		DisplayDamage(-dmg*2);
 		Debug.Log("Enemy Health is "+ this.Health);
 		if(currentHealth <=0)
 			Die();
@@ -117,8 +123,11 @@ public class EnemyStats : MonoBehaviour {
 		}
 	}
 
+	void DisplayDamage(int value){
+		//Display Damage
+		Text damageValueClone =Instantiate(damageValueText,(this.transform.position),Quaternion.identity);
+		damageValueClone.text =value.ToString();
+		damageValueClone.transform.SetParent (canvas.transform,false);//Set Damage Value CLone as child of Canvas on Enemy
+	}
 
-
-
-		
 }
