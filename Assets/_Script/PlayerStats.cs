@@ -9,10 +9,16 @@ public class PlayerStats : MonoBehaviour {
 
 	//Health
 	[SerializeField]
-	int currentHealth,maxHealth=100;
-	public int Health{
+	float currentHealth;
+	public float Health{
 		get{ return currentHealth;}
 		private set {currentHealth = value;}
+	}
+	//Max Health
+	[SerializeField]
+	float maxHealth=100;
+	public float MaxHealth{
+		get{ return maxHealth;}
 	}
 
 	//Strength
@@ -70,10 +76,10 @@ public class PlayerStats : MonoBehaviour {
 		Debug.Log("Player has died!");
 	}
 
-	void ApplyDamage(int dmg){
+	void ApplyDamage(float dmg){
 		animator.Play("Hurt");
 		dmg -= this.Defense;
-		dmg = Mathf.Clamp(dmg,1,int.MaxValue);
+		dmg = Mathf.Clamp(dmg,1,float.MaxValue);
 		//Apply Damage to Health
 		AffectHealth(-dmg);
 		Debug.Log("Player Health is "+ this.Health);
@@ -95,10 +101,10 @@ public class PlayerStats : MonoBehaviour {
 		return this.Strength;
 	}
 
-	void AffectHealth(int value){
+	void AffectHealth(float value){
 		//Apply positive or Negative Value to Health
 		currentHealth +=value;
-		currentHealth = Mathf.Clamp(currentHealth,0,maxHealth);
+		currentHealth = Mathf.Clamp(currentHealth,0f,maxHealth);
 		// 90 Hp Heal=20
 	}
 
