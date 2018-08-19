@@ -6,6 +6,7 @@ public class PlayerStats : MonoBehaviour {
 
 	private Animator animator;
 	public BoxCollider2D weapon;
+	public GameObject playerLevelUpParticles;
 
 	//Health
 	[SerializeField]
@@ -23,25 +24,31 @@ public class PlayerStats : MonoBehaviour {
 
 	//Strength
 	[SerializeField]
-	int strength=10;
-	public int Strength{
+	float strength=10;
+	public float Strength{
 		get{ return strength;}
 		private set {strength = value;}
 	}
 
 	//Defense
 	[SerializeField]
-	int defense =1;
-	public int Defense{
+	float defense =1;
+	public float Defense{
 		get{ return defense;}
 		private set {defense = value;}
 	}
 
 	//Exp
-	float exp,maxExp=100f;
+	float exp;
 	public float Exp{
 		get{ return exp;}
 		private set {exp = value;}
+	}
+
+	//MaxExp
+	float maxExp=100f;
+	public float MaxExp{
+		get{ return maxExp;}
 	}
 
 	//Level
@@ -59,6 +66,7 @@ public class PlayerStats : MonoBehaviour {
 	void Start () {
 		IsWeaponActive(0);
 		animator = GetComponent<Animator>();
+		playerLevelUpParticles.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -88,6 +96,7 @@ public class PlayerStats : MonoBehaviour {
 	}
 
 	void LevelUP(){
+		StartCoroutine("PlayParticleLevelUpSystem");
 		this.Level +=1;
 		this.Defense +=1;
 		this.Strength+=1;
@@ -96,7 +105,7 @@ public class PlayerStats : MonoBehaviour {
 		Debug.Log("Level Up");
 	}
 
-	int Attack(){
+	float Attack(){
 		Debug.Log("Player has attacked for " + this.Strength +" damage");
 		return this.Strength;
 	}
@@ -108,7 +117,7 @@ public class PlayerStats : MonoBehaviour {
 		// 90 Hp Heal=20
 	}
 
-	void ApplyExp(int value){
+	void ApplyExp(float value){
 		exp+=value;
 		if(exp >= maxExp){
 			LevelUP();
@@ -119,6 +128,12 @@ public class PlayerStats : MonoBehaviour {
 			//Level Up with Current Exp at 5
 		}
 		print("Current Level: " + this.Level + "Current Exp: "+ this.Exp);
+	}
+
+	IEnumerator PlayParticleLevelUpSystem(){
+		playerLevelUpParticles.SetActive(true);
+		yield return new  WaitForSeconds(1.0f);
+		playerLevelUpParticles.SetActive(false);
 	}
 
 	//Controlled through Animation Events

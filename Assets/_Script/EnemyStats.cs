@@ -13,24 +13,24 @@ public class EnemyStats : MonoBehaviour {
 
 	//Health
 	[SerializeField]
-	int currentHealth,maxHealth=100;
-	public int Health{
+	float currentHealth,maxHealth=100;
+	public float Health{
 		get{ return currentHealth;}
 		private set {currentHealth = value;}
 	}
 
 	//Strength
 	[SerializeField]
-	int strength=10;
-	public int Strength{
+	float strength=10;
+	public float Strength{
 		get{ return strength;}
 		private set {strength = value;}
 	}
 
 	//Defense
 	[SerializeField]
-	int defense =1;
-	public int Defense{
+	float defense =1;
+	public float Defense{
 		get{ return defense;}
 		private set {defense = value;}
 	}
@@ -83,7 +83,7 @@ public class EnemyStats : MonoBehaviour {
 		GetComponent<EnemyController>().enabled=false;//Stop the Enemy from Follwing and attacking the Player
 	}
 
-	public void ApplyDamage(int dmg){
+	public void ApplyDamage(float dmg){
 		animator.Play("Hurt");
 		dmg -= this.Defense;
 		dmg = Mathf.Clamp(dmg,1,int.MaxValue);
@@ -104,12 +104,12 @@ public class EnemyStats : MonoBehaviour {
 		Debug.Log("Level Up");
 	}
 
-	int Attack(){
+	float Attack(){
 		Debug.Log("Enemy has attacked for " + this.Strength +" damage");
 		return this.Strength;
 	}
 
-	void AffectHealth(int value){
+	void AffectHealth(float value){
 		//Apply positive or Negative Value to Health
 		currentHealth +=value;
 		currentHealth = Mathf.Clamp(currentHealth,0,maxHealth);
@@ -123,7 +123,7 @@ public class EnemyStats : MonoBehaviour {
 		}
 	}
 
-	void DisplayDamage(int value){
+	void DisplayDamage(float value){
 		//Display Damage
 		Text damageValueClone =Instantiate(damageValueText,(this.transform.position),Quaternion.identity);
 		damageValueClone.text =value.ToString();
