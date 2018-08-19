@@ -84,7 +84,7 @@ public class PlayerStats : MonoBehaviour {
 		Debug.Log("Player has died!");
 	}
 
-	void ApplyDamage(float dmg){
+	public void ApplyDamage(float dmg){
 		animator.Play("Hurt");
 		dmg -= this.Defense;
 		dmg = Mathf.Clamp(dmg,1,float.MaxValue);

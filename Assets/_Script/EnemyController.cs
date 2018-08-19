@@ -7,7 +7,8 @@ public class EnemyController : MonoBehaviour {
 
 	private Animator animator;
 	private Rigidbody2D enemyRigidBody;
-	public Transform playerTransform;
+	private EnemyStats stats;
+	public GameObject player;
 	public float m_Speed;
 	public bool attack = false;
 
@@ -18,20 +19,21 @@ public class EnemyController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		stats = GetComponent<EnemyStats>();
 		animator = GetComponent<Animator>();
 		enemyRigidBody = GetComponent<Rigidbody2D>();
 		if(!goingLeft)
 			Flip();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if(cameIntoContactWithPlayer){
-			if(playerTransform.position.x > this.transform.position.x && goingLeft){
+			if(player.transform.position.x > this.transform.position.x && goingLeft){
 				Flip();
 				goingLeft=false;
 			}
-			if(playerTransform.position.x < this.transform.position.x && !goingLeft){
+			if(player.transform.position.x < this.transform.position.x && !goingLeft){
 				Flip();
 				goingLeft=true;
 			}
@@ -87,6 +89,12 @@ public class EnemyController : MonoBehaviour {
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
+	}
+
+	//Controlled through Animation Events
+	public void IsWeaponActive(int value){
+		if(value ==1)
+			player.GetComponent<PlayerStats>().ApplyDamage(stats.Strength);
 	}
 
 }

@@ -31,6 +31,8 @@ public class HealthBar : MonoBehaviour {
 		" Player's Max Health: "+ player.MaxHealth);
 		if(player.Health<=15){
 			heartIcon.GetComponent<Animator>().enabled = true;
+		}else{
+			heartIcon.GetComponent<Animator>().enabled = false;
 		}
 	}
 
