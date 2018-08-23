@@ -13,13 +13,14 @@ public class PlayerStats : MonoBehaviour {
 	float currentHealth;
 	public float Health{
 		get{ return currentHealth;}
-		private set {currentHealth = value;}
+		set {currentHealth = value;}
 	}
 	//Max Health
 	[SerializeField]
 	float maxHealth=100;
 	public float MaxHealth{
 		get{ return maxHealth;}
+		set {maxHealth = value;}
 	}
 
 	//Strength
@@ -27,7 +28,7 @@ public class PlayerStats : MonoBehaviour {
 	float strength=10;
 	public float Strength{
 		get{ return strength;}
-		private set {strength = value;}
+		set {strength = value;}
 	}
 
 	//Defense
@@ -35,7 +36,7 @@ public class PlayerStats : MonoBehaviour {
 	float defense =1;
 	public float Defense{
 		get{ return defense;}
-		private set {defense = value;}
+		set {defense = value;}
 	}
 
 	//Exp
@@ -85,7 +86,9 @@ public class PlayerStats : MonoBehaviour {
 	}
 
 	public void ApplyDamage(float dmg){
-		animator.Play("Hurt");
+		if(!weapon.enabled){//Only Play Hurt Animation when Player is not attackingss
+			animator.Play("Hurt");
+		}
 		dmg -= this.Defense;
 		dmg = Mathf.Clamp(dmg,1,float.MaxValue);
 		//Apply Damage to Health
@@ -142,6 +145,24 @@ public class PlayerStats : MonoBehaviour {
 			weapon.enabled=true;
 		}else{
 			weapon.enabled=false;
+		}
+	}
+
+	public void ApplyLevel(int pastLevel){
+		for(int i=0;i<level-pastLevel;i++){
+			Debug.Log("Leveling Up Now");
+			this.Level +=1;
+			this.Defense +=1;
+			this.Strength+=1;
+			this.maxHealth +=10;
+			this.currentHealth = maxHealth;//Reset Health Upon Level UP!!
+			Debug.Log("Level Up");
+
+			//Player is Level =5
+			//During Buff -> Players Gains 2 levels
+			//Current Level 7
+			//Past Level 5
+			//Default Level up System for 2 levels
 		}
 	}
 
