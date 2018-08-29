@@ -26,6 +26,7 @@ public class Buffs : MonoBehaviour {
 				couroutine = ApplyMaxHealthBuff(collider.gameObject);
 			}
 			buffTextDisplay.SetActive(true);
+			AdjustLevelsForRemovedBuffs(collider.gameObject);
 			StartCoroutine(couroutine);
 		}
 	}
@@ -37,7 +38,6 @@ public class Buffs : MonoBehaviour {
 		player.GetComponent<PlayerStats>().Health = player.GetComponent<PlayerStats>().MaxHealth;
 		yield return new WaitForSeconds(buffTimer);
 		player.GetComponent<PlayerStats>().MaxHealth= returnMaxHealth;
-		AdjustLevelsForRemovedBuffs(player);
 		buffTextDisplay.SetActive(false);
 		Destroy(gameObject);
 	}
@@ -47,7 +47,7 @@ public class Buffs : MonoBehaviour {
 		player.GetComponent<PlayerStats>().Strength+=10f;
 		yield return new WaitForSeconds(buffTimer);
 		player.GetComponent<PlayerStats>().Strength = returnStrength;
-		AdjustLevelsForRemovedBuffs(player);
+		//AdjustLevelsForRemovedBuffs(player);
 		buffTextDisplay.SetActive(false);
 		Destroy(gameObject);
 	}
@@ -57,7 +57,7 @@ public class Buffs : MonoBehaviour {
 		player.GetComponent<PlayerStats>().Defense+=10;
 		yield return new WaitForSecondsRealtime(buffTimer);
 		player.GetComponent<PlayerStats>().Defense = returnDefense;
-		AdjustLevelsForRemovedBuffs(player);
+		//AdjustLevelsForRemovedBuffs(player);
 		buffTextDisplay.SetActive(false);
 		Destroy(gameObject);
 	}
@@ -67,7 +67,6 @@ public class Buffs : MonoBehaviour {
 			player.GetComponent<PlayerStats>().ApplyLevel(playerPastLevel);
 		}
 	}
-
 
 	void DisablePotionDisplay(){
 		this.GetComponent<SpriteRenderer>().enabled=false;
